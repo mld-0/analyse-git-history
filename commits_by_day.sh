@@ -9,6 +9,8 @@ set -o pipefail  # don't hide errors within pipes
 #	{{{2
 
 #	Continue: 2022-05-18T15:34:07AEST does command used 'git log' (with formatting/before/after arguments) get every commit (recalling subdirectory repo merged as a branch (and '-m' being needed?) (see worklog))?
+#	Ongoing: 2022-05-18T16:54:15AEST functions should be legible / elegent with only func_name/arg-parsing bash stuff collapsed
+#	Ongoing: 2022-05-18T16:54:59AEST (this script / another script), (lines changed for each commit)
 
 #	Allow subshell 'exit 2' to terminate script
 set -E;
