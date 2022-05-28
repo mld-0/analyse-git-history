@@ -6,7 +6,7 @@ set -o errexit   # abort on nonzero exitstatus
 set -o nounset   # abort on unbound variable
 set -o pipefail  # don't hide errors within pipes
 
-flag_debug=1
+flag_debug=0
 
 log_debug() {
 #	{{{
@@ -56,7 +56,23 @@ check_commits_to_be_pushed() {
 	local path_dir="${1:-$PWD}"
 	local temp_PWD="$PWD"
 	cd "$path_dir"
-	git diff --stat --cached origin/$( git branch --show-current )
+
+	if [[ `has_remote_origin "$path_dir"` = "true" ]]; then
+		git diff --stat --cached origin/$( git branch --show-current )
+	fi
+
+	cd "$temp_PWD"
+}
+
+has_remote_origin() {
+	local path_dir="$1"
+	local temp_PWD=$PWD
+	cd "$path_dir"
+	if [[ ! -z `git remote -v` ]]; then
+		echo "true"
+	else
+		echo "false"
+	fi
 	cd "$temp_PWD"
 }
 
