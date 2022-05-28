@@ -57,8 +57,11 @@ check_commits_to_be_pushed() {
 	local temp_PWD="$PWD"
 	cd "$path_dir"
 
-	if [[ `has_remote_origin "$path_dir"` = "true" ]]; then
-		git diff --stat --cached origin/$( git branch --show-current )
+	if [[ ! -z `has_remote_origin "$path_dir"` ]]; then
+		result_str=$( git diff --stat --cached origin/$( git branch --show-current ) )
+		echo "$result_str"
+	else
+		log_debug "$func_name, has not has_remote_origin, path_dir=($path_dir)" 
 	fi
 
 	cd "$temp_PWD"
@@ -70,8 +73,6 @@ has_remote_origin() {
 	cd "$path_dir"
 	if [[ ! -z `git remote -v` ]]; then
 		echo "true"
-	else
-		echo "false"
 	fi
 	cd "$temp_PWD"
 }

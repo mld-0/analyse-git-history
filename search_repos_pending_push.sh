@@ -82,9 +82,14 @@ search_repos_pending_push() {
 	delim=$nl
 	for loop_repo in "${repos_in_dir[@]}"; do
 		log_debug "$func_name, loop_repo=($loop_repo)"
-		if [[ -z `$SHELL "$path_check_commitsToPush" "$loop_repo"` ]]; then
+
+		local loop_check=$( $SHELL "$path_check_commitsToPush" "$loop_repo" )
+		#log_debug "$func_name, loop_check=($loop_check)"
+
+		if [[ ! -z  $loop_check ]]; then
 			repos_result="$repos_result$delim$loop_repo"
 		fi
+
 	done
 
 	echo "$repos_result"
